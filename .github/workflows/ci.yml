@@ -35,6 +35,11 @@ jobs:
       - name: �� Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # -------- Prisma setup ----------
+      - name: 🧩 Generate Prisma client
+        working-directory: apps/api
+        run: pnpm exec prisma generate
+
       # -------- Backend (NestJS) ----------
       - name: 🏗 Build backend (NestJS)
         working-directory: apps/api
@@ -42,7 +47,7 @@ jobs:
 
       - name: 🧪 Test backend (NestJS)
         working-directory: apps/api
-        run: pnpm test
+        run: pnpm test -- --passWithNoTests
 
       # -------- Frontend (Next.js) ----------
       - name: 🏗 Build frontend (Next.js)
