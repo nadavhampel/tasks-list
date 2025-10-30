@@ -36,7 +36,7 @@ jobs:
         run: pnpm --filter web test
 
       - name: Run frontend e2e tests (Playwright)
-        run: pnpm --filter web test:e2e
+        run: pnpm --filter "./apps/web" test:e2e
 
       - name: 🧪 Lint frontend
         run: pnpm lint || echo "✅ Lint warnings ignored"
