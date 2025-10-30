@@ -28,6 +28,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Generate Prisma Client
+        working-directory: apps/api
+        run: npx prisma generate
+
       - name: Lint code
         run: pnpm lint || echo "Skipping lint errors for now"
 
