@@ -1,4 +1,4 @@
-name: CI - Build and Test
+name: CI Pipeline
 
 on:
   push:
@@ -7,42 +7,40 @@ on:
     branches: [main, dev]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: 🧰 Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: 🟣 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'pnpm'
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-          run_install: false
+      - name: 📦 Install pnpm
+        run: npm install -g pnpm
 
-      - name: Install dependencies
+      - name: 📥 Install dependencies
         run: pnpm install
 
-      - name: Generate Prisma Client
-        working-directory: apps/api
-        run: npx prisma generate
-
-      - name: Lint code
-        run: pnpm lint || echo "Skipping lint errors for now"
-
-      - name: Build backend (NestJS)
+      # -------- Backend (NestJS) ----------
+      - name: 🏗 Build backend (NestJS)
         working-directory: apps/api
         run: pnpm build
 
-      - name: Build frontend (Next.js)
+      - name: 🧪 Test backend (NestJS)
+        working-directory: apps/api
+        run: pnpm test
+
+      # -------- Frontend (Next.js) ----------
+      - name: 🏗 Build frontend (Next.js)
         working-directory: apps/web
         run: pnpm build
 
-      - name: Run tests (Vitest)
-        run: pnpm test || echo "Skipping tests for now"
+      # (Optional) verify that the Next.js build output exists
+      - name: ✅ Verify frontend build
+        run: ls -la apps/web/.next
 
