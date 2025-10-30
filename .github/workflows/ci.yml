@@ -26,9 +26,12 @@ jobs:
         run: pnpm install
 
       # ---- Backend (NestJS) ----
-      - name: 🏗️ Build backend (NestJS)
+      - name: 🛠️ Generate Prisma Client
+        run: pnpm prisma generate
         working-directory: apps/api
-        run: pnpm build
+
+      - name: 🏗️ Build backend (NestJS)
+        run: pnpm --filter api build
 
       - name: 🧪 Test backend (NestJS)
         working-directory: apps/api
@@ -45,4 +48,3 @@ jobs:
 
       - name: ✅ CI finished
         run: echo "🎉 Build & Test pipeline completed successfully!"
-
