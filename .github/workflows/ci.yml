@@ -18,13 +18,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
 
       - name: 📦 Install pnpm
-        run: npm install -g pnpm
+        run: |
+          npm install -g pnpm
+          pnpm --version
 
-      - name: 📥 Install dependencies
-        run: pnpm install
+      - name: 💾 Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: �� Install dependencies
+        run: pnpm install --frozen-lockfile
 
       # -------- Backend (NestJS) ----------
       - name: 🏗 Build backend (NestJS)
@@ -40,7 +49,6 @@ jobs:
         working-directory: apps/web
         run: pnpm build
 
-      # (Optional) verify that the Next.js build output exists
       - name: ✅ Verify frontend build
         run: ls -la apps/web/.next
 
