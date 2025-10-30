@@ -1,0 +1,12 @@
+{
+  "name": "my-fullstack-app",
+  "private": true,
+  "scripts": {
+    "dev:web": "pnpm --filter web dev",
+    "dev:api": "pnpm --filter api start:dev",
+    "dev": "concurrently -n API,WEB -c cyan,magenta \"pnpm dev:api\" \"pnpm dev:web\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
