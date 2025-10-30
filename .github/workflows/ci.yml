@@ -35,11 +35,11 @@ jobs:
       - name: 🧪 Run frontend unit tests (Vitest)
         run: pnpm --filter web test
 
-      - name: Run frontend e2e tests (Playwright)
-        run: pnpm --filter "./apps/web" test:e2e
+      - name: 🎭 Run frontend e2e tests (Playwright)
+        run: pnpm --filter web test:e2e
 
       - name: 🧪 Lint frontend
-        run: pnpm lint || echo "✅ Lint warnings ignored"
+        run: pnpm --filter web lint || echo "✅ Lint warnings ignored"
 
       - name: ✅ CI finished
         run: echo "🎉 Build & Test pipeline completed successfully!"
