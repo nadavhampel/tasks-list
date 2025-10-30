@@ -27,8 +27,7 @@ jobs:
 
       # ---- Backend (NestJS) ----
       - name: 🛠️ Generate Prisma Client
-        run: pnpm prisma generate
-        working-directory: apps/api
+        run: pnpm --filter api prisma:generate
 
       - name: 🏗️ Build backend (NestJS)
         run: pnpm --filter api build
