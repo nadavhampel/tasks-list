@@ -32,8 +32,11 @@ jobs:
       - name: 🏗️ Build all applications
         run: pnpm build
 
-      - name: 🧪 Test backend
-        run: pnpm test || echo "✅ No tests yet, skipping"
+      - name: 🧪 Run frontend unit tests (Vitest)
+        run: pnpm --filter web test
+
+      - name: Run frontend e2e tests (Playwright)
+        run: pnpm --filter web test:e2e
 
       - name: 🧪 Lint frontend
         run: pnpm lint || echo "✅ Lint warnings ignored"
